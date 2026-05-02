@@ -59,6 +59,16 @@
 #define OPENBOOK_SD_MHZ 25
 #endif
 
+#ifndef OPENBOOK_BUTTON_UP
+#define OPENBOOK_BUTTON_UP 3
+#endif
+#ifndef OPENBOOK_BUTTON_DOWN
+#define OPENBOOK_BUTTON_DOWN 1
+#endif
+#ifndef OPENBOOK_BUTTON_SELECT
+#define OPENBOOK_BUTTON_SELECT 9
+#endif
+
 #ifndef OPENBOOK_BABEL_FROM_PARTITION
 #define OPENBOOK_BABEL_FROM_PARTITION 1
 #endif
@@ -90,6 +100,10 @@ constexpr int kSdMosi = OPENBOOK_SD_MOSI;
 constexpr int kSdMiso = OPENBOOK_SD_MISO;
 constexpr int kSdCs = OPENBOOK_SD_CS;
 constexpr int kSdMhz = OPENBOOK_SD_MHZ;
+
+constexpr int kButtonUp = OPENBOOK_BUTTON_UP;
+constexpr int kButtonDown = OPENBOOK_BUTTON_DOWN;
+constexpr int kButtonSelect = OPENBOOK_BUTTON_SELECT;
 
 inline bool DisplayPinsValid() {
   return kEpdSck >= 0 && kEpdMosi >= 0 && kEpdCs >= 0 && kEpdDc >= 0 && kEpdRst >= 0;

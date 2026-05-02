@@ -37,6 +37,47 @@ void UiRenderer::drawFull(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
   drawTable(display, typesetter, entries);
 }
 
+void UiRenderer::drawFullWithSelection(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
+                                       const std::vector<FileEntry>& entries, const char* category, 
+                                       int16_t selectedIndex) {
+  if (!display) {
+    return;
+  }
+
+  drawDropdown(display, typesetter, category, false);
+  
+  if (!entries.empty()) {
+    UiRect rect = tableRect();
+    display->drawRect(rect.x, rect.y, rect.w, rect.h, EPD_BLACK);
+
+    int16_t innerX = rect.x + 4;
+    int16_t innerW = rect.w - 8;
+    int16_t col2W = 72;
+    int16_t col1W = innerW - columnGap_ - col2W;
+    int16_t col1X = innerX;
+    int16_t col2X = innerX + col1W + columnGap_;
+
+    drawHeaderRow(display, typesetter, rect.y, col1X, col1W, col2X, col2W);
+
+    int16_t contentY = rect.y + headerHeight_;
+    int16_t contentH = rect.h - headerHeight_;
+    int16_t maxRows = contentH / rowHeight_;
+
+    int16_t row = 0;
+    for (size_t i = 0; i < entries.size(); i++) {
+      if (row >= maxRows) {
+        break;
+      }
+
+      int16_t rowY = contentY + row * rowHeight_;
+      bool isSelected = (i == static_cast<size_t>(selectedIndex));
+      drawRow(display, typesetter, entries[i], rowY, col1X, col1W, col2X, col2W, isSelected);
+      display->drawFastHLine(rect.x, rowY + rowHeight_ - 1, rect.w, EPD_LIGHT);
+      row++;
+    }
+  }
+}
+
 void UiRenderer::drawDropdown(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
                               const char* category, bool open) {
   if (!display) {
@@ -115,9 +156,14 @@ void UiRenderer::drawHeaderRow(Adafruit_GFX* display, BabelTypesetterGFX* typese
 }
 
 void UiRenderer::drawRow(Adafruit_GFX* display, BabelTypesetterGFX* typesetter, const FileEntry& entry,
-                         int16_t y, int16_t col1X, int16_t col1W, int16_t col2X, int16_t col2W) {
+                         int16_t y, int16_t col1X, int16_t col1W, int16_t col2X, int16_t col2W, bool isSelected) {
   if (!display) {
     return;
+  }
+
+  // Highlight selected row
+  if (isSelected) {
+    display->fillRect(col1X - 4, y, col1W + col2W + columnGap_ + 8, rowHeight_, EPD_LIGHT);
   }
 
   std::string label = entry.name;

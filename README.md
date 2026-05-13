@@ -8,3 +8,7 @@ E-nk.OS is an operating system for e-ink display e-book readers built on the ESP
 ## What's going to be Done
 
 Implement file navigation through subdirectories with back functionality, add file opening and reading from SD card storage, implement file type detection and appropriate rendering handlers for supported formats, complete the category filtering system for organizing files, add file content display and pagination for readable text output, implement file search and sorting functionality in the file browser, add settings and configuration management for user preferences, implement status indicators and error handling for user feedback, and make power management and standby modes for battery efficiency.
+
+## How's it going to do whats to be Done
+
+I've realised that i do not need to make a bootloader for a custom os for an ESP-32-S3

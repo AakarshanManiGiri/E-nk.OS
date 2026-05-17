@@ -50,7 +50,7 @@ std::vector<FileEntry> Filesystem::scanDirectory(const char* path) {
 }
 
 bool Filesystem::openDirectory(const char* dirName) {
-  if (!dirName || dirName[0] == '\0') {
+  if (!ready_ || !sd_ || !dirName || dirName[0] == '\0' || currentPath_.empty()) {
     return false;
   }
 

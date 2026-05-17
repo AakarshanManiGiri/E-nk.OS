@@ -31,9 +31,6 @@ void initializeButtons() {
 
 void refreshDisplay(bool fullRefresh = false) {
   BabelTypesetterGFX* typesetter = g_babel.typesetter();
-  if (!typesetter) {
-    return;
-  }
 
   g_display.clearBuffer(EPD_WHITE);
   
@@ -57,7 +54,12 @@ void setup() {
 
   BabelTypesetterGFX* typesetter = nullptr;
   if (displayReady) {
-    g_babel.begin(g_display.display(), sdReady ? g_fs.sd() : nullptr);
+    bool babelReady = g_babel.begin(g_display.display(), sdReady ? g_fs.sd() : nullptr);
+    if (!babelReady) {
+      if (Serial) {
+        Serial.println("Babel initialization failed; using fallback text rendering.");
+      }
+    }
     typesetter = g_babel.typesetter();
   }
 

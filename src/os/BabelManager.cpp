@@ -6,7 +6,8 @@ bool BabelManager::begin(Adafruit_GFX* display, SdFat* sd) {
   }
 
 #if OPENBOOK_BABEL_FROM_PARTITION
-  typesetter_.reset(new BabelTypesetterGFX(display, OPENBOOK_BABEL_PARTITION));
+  (void)sd;
+  return false;
 #else
 #if defined(BOARD_REQUIRES_BABEL_FILE)
   if (!sd) {
@@ -19,7 +20,12 @@ bool BabelManager::begin(Adafruit_GFX* display, SdFat* sd) {
 #endif
 #endif
 
-  return typesetter_ && typesetter_->begin();
+  if (!typesetter_) {
+    return false;
+  }
+
+  typesetter_->begin();
+  return true;
 }
 
 BabelTypesetterGFX* BabelManager::typesetter() {

@@ -6,8 +6,9 @@ bool Filesystem::begin() {
   }
 
   sdSpi_.begin(board::kSdSck, board::kSdMiso, board::kSdMosi, board::kSdCs);
-  sd_.reset(new SdFat(&sdSpi_));
-  ready_ = sd_->begin(board::kSdCs, SD_SCK_MHZ(board::kSdMhz));
+  sd_.reset(new SdFat());
+  SdSpiConfig spiConfig(board::kSdCs, SHARED_SPI, SD_SCK_MHZ(board::kSdMhz), &sdSpi_);
+  ready_ = sd_->begin(spiConfig);
   return ready_;
 }
 

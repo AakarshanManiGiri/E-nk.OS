@@ -203,10 +203,8 @@ void UiRenderer::drawText(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
     typesetter->setBold(bold);
     typesetter->setItalic(false);
     typesetter->setTextSize(1);
-    typesetter->setLineSpacing(0);
-    typesetter->setParagraphSpacing(0);
     typesetter->setTextColor(color);
-    typesetter->print(text);
+    typesetter->print(const_cast<char*>(text));
   } else {
     display->setTextColor(color);
     display->setTextSize(1);

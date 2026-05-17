@@ -1,0 +1,12 @@
+{
+  "configurations": [
+    {
+      "name": "ESP32S3-PlatformIO",
+      "compileCommands": "${workspaceFolder}/compile_commands.json",
+      "intelliSenseMode": "windows-gcc-x64",
+      "cStandard": "c11",
+      "cppStandard": "c++11"
+    }
+  ],
+  "version": 4
+}

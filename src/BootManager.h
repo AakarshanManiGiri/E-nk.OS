@@ -1,5 +1,5 @@
 #pragma once
-#inlude <Arduino.h>
+#include <Arduino.h>
 
 struct BootInfo {
     enum StorageType : uint8_t { NONE = 0, SD = 1, UNKNOWN = 0xFF };

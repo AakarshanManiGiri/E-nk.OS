@@ -28,11 +28,16 @@ public:
   void drawFullWithSelection(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
                              const std::vector<FileEntry>& entries, const char* category, 
                              int16_t selectedIndex);
-  void drawDropdown(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
-                    const char* category, bool open);
+                             void drawDropdown(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
+                             const char* category, bool open);
+                             void drawContextMenu(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
+                             const std::vector<std::string>& items, int16_t selectedIndex,
+                             int16_t x, int16_t y);
+                             void drawReaderView(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
+                             const char* text, int16_t pageNum, int16_t totalPages);
 
-private:
-  void drawTable(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
+                             private:
+                             void drawTable(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
                  const std::vector<FileEntry>& entries);
   void drawHeaderRow(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
                      int16_t y, int16_t col1X, int16_t col1W, int16_t col2X, int16_t col2W);

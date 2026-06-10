@@ -13,8 +13,8 @@ bool Filesystem::begin() {
 }
 
 std::vector<FileEntry> Filesystem::scanRoot() {
-  currentPath_ = "/";
-  return scanDirectory("/");
+  currentPath_ = "/Books";
+  return scanDirectory("/Books");
 }
 
 std::vector<FileEntry> Filesystem::scanDirectory(const char* path) {
@@ -96,4 +96,18 @@ SdFat* Filesystem::sd() {
 
 bool Filesystem::ready() const {
   return ready_;
+}
+
+bool Filesystem::deleteFile(const char* path) {
+  if (!ready_ || !sd_ || !path || path[0] == '\0') {
+    return false;
+  }
+  return sd_->remove(path);
+}
+
+bool Filesystem::renameFile(const char* oldPath, const char* newPath) {
+  if (!ready_ || !sd_ || !oldPath || oldPath[0] == '\0' || !newPath || newPath[0] == '\0') {
+    return false;
+  }
+  return sd_->rename(oldPath, newPath);
 }

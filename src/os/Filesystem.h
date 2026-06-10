@@ -24,6 +24,8 @@ public:
   const char* getCurrentPath() const;
   SdFat* sd();
   bool ready() const;
+  bool deleteFile(const char* path);
+  bool renameFile(const char* oldPath, const char* newPath);
 
 private:
   SPIClass sdSpi_;

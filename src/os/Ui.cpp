@@ -231,3 +231,48 @@ void UiRenderer::formatSize(uint64_t bytes, char* out, size_t outSize) const {
     snprintf(out, outSize, "%llu GB", gb);
   }
 }
+
+void UiRenderer::drawContextMenu(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
+                                 const std::vector<std::string>& items, int16_t selectedIndex,
+                                 int16_t x, int16_t y) {
+  if (!display || items.empty()) {
+    return;
+  }
+
+  const int16_t itemHeight = 20;
+  const int16_t padding = 4;
+  int16_t menuWidth = 100; // default width
+  int16_t menuHeight = items.size() * itemHeight + padding * 2;
+
+  // #this handles drawing the menu box
+  display->fillRoundRect(x, y, menuWidth, menuHeight, 5, EPD_WHITE);
+  display->drawRoundRect(x, y, menuWidth, menuHeight, 5, EPD_BLACK);
+
+  for (size_t i = 0; i < items.size(); ++i) {
+    int16_t itemY = y + padding + i * itemHeight;
+    if (i == static_cast<size_t>(selectedIndex)) {
+      // #this handles highlighting the selected item
+      display->fillRect(x + 1, itemY, menuWidth - 2, itemHeight, EPD_DARK);
+      drawText(display, typesetter, items[i].c_str(), x + padding, itemY, menuWidth - padding * 2, itemHeight, false, EPD_WHITE);
+    } else {
+      drawText(display, typesetter, items[i].c_str(), x + padding, itemY, menuWidth - padding * 2, itemHeight, false, EPD_BLACK);
+    }
+  }
+}
+
+void UiRenderer::drawReaderView(Adafruit_GFX* display, BabelTypesetterGFX* typesetter,
+                                const char* text, int16_t pageNum, int16_t totalPages) {
+  if (!display) {
+    return;
+  }
+
+  display->fillScreen(EPD_WHITE);
+
+  // #this draws the book text
+  drawText(display, typesetter, text, padding_, padding_, width_ - padding_ * 2, height_ - padding_ * 2 - 20, false, EPD_BLACK);
+
+  // #this draws the page number
+  char pageStr[32];
+  snprintf(pageStr, sizeof(pageStr), "%d / %d", pageNum, totalPages);
+  drawText(display, typesetter, pageStr, padding_, height_ - 20, width_ - padding_ * 2, 20, false, EPD_BLACK);
+}

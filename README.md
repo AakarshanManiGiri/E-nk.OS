@@ -12,3 +12,6 @@ Implement file navigation through subdirectories with back functionality, add fi
 ## How's it going to do whats to be Done
 
 I've realised that i do not need to make a bootloader for a custom os for an ESP-32-S3
+
+## Future
+-Get it fully functional and add a couple more QoL features.
